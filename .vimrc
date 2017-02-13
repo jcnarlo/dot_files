@@ -32,6 +32,7 @@ Plug 'tpope/vim-surround' " easy modify surrounds
 " Visual aides
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } " distraction-free writing
 Plug 'fatih/molokai' " color scheme
+Plug 'Reewr/vim-monokai-phoenix'  "color scheme
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' } " focus tool
 Plug 'itchyny/lightline.vim' " status bar
 Plug 't9md/vim-choosewin' " window label overlay
@@ -44,6 +45,152 @@ call plug#end()
 
 " Not vi
 set nocompatible
+
+" jcnii {
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+" behave xterm
+behave mswin
+set selectmode=mouse,key
+set nobackup
+set nowritebackup
+
+set shell=C:/cygwin64/bin/bash
+"set shellcmdflag=--login\ -c
+set shellxquote=\"
+
+set foldmethod=syntax
+" set foldnestmax=1
+set foldlevelstart=99
+let c_no_comment_fold = 1
+
+let c_space_errors = 1
+let c_cpp_comments = 1
+
+" set formatoptions=croqn
+set textwidth=120
+
+" winsize 80 60
+set lines=50
+set columns=120
+
+"let showmarks_include = "A-Z"
+let showmarks_include = ""
+
+let calendar_diary = "~/vimfiles/diary"
+
+highlight LastSearch ctermbg=lightblue guibg=lightblue
+highlight GrepResult ctermbg=red guibg=red
+" Highlight the previous search pattern
+map <C-h> :match LastSearch ///<CR>
+
+" Make , ,  work like the windows keys should (cut, paste, copy)
+map <C-x> "*d
+map <C-v> "*p
+map <C-c> "*y
+
+" Run the stylechecker on the current file and use its output as error output
+" map <C-s> :w!<CR>:silent !c:\Home\ProgramFiles\perl\bin\perl c:\Users\jcnarlo\local\sbin\StyleChecker.pl -e 1 % > c:\Users\jcnarlo\tmp\style.out<CR>:cf c:\Users\jcnarlo\tmp\style.out<CR>:botright cw<CR>
+" map <C-s><C-s> :w!<CR>:silent !c:\Home\ProgramFiles\perl\bin\perl c:\Users\jcnarlo\local\sbin\StyleChecker.pl -e 1 -t % > c:\Users\jcnarlo\tmp\style.out<CR>:cf c:\Users\jcnarlo\tmp\style.out<CR>:botright cw<CR>
+
+" F will search for the current function's name and display in the status bar
+" Will put this function name into the cut/paste buffer
+" TODO: This is not foolproof
+"map F [[k"*yw``:echo @*<CR>
+
+" DirDiff
+" Diff current buffer with alternate buffer
+let g:DirDiffExcludes = "Debug,Release,tags,*.swp,*.obj,*.sbr,*.ilk,*.suo,*.pdb,*.idb,*.ncb,*.exp,*.lib,*.map,*.exe,*.manifest"
+map <C-D><C-D> :DirDiff
+map <C-D>f :vert diffsplit #<CR>
+map <C-D>u :diffupdate<CR>
+map <C-D>c <C-W><C-W>:close<CR>:se foldcolumn=0<CR>
+map <C-D>j ]c
+map <C-D>k [c
+map <C-D>p \dp
+map <C-D>g \dg
+map <C-D><C-j> ]c
+map <C-D><C-k> [c
+map <C-D><C-p> \dp
+map <C-D><C-g> \dg
+
+" Grep.vim
+let Grep_Path = '/cygdrive/c/cygwin64/bin/grep.exe'
+let Egrep_Path = '/cygdrive/c/cygwin64/bin/egrep.exe'
+let Fgrep_Path = '/cygdrive/c/cygwin64/bin/fgrep.exe'
+let Grep_Find_Path = '/cygdrive/c/cygwin64/bin/find.exe'
+let Grep_Xargs_Path = '/cygdrive/c/cygwin64/bin/xargs.exe'
+let Grep_Default_Filelist = 'src include'
+let Grep_Default_Options = '-R'
+let Grep_Cygwin_Find = 1
+let Grep_Skip_Dirs = 'tmp .svn .git share'
+let Grep_Skip_Files = '*.pdb *.tmp *~ *,v s.* tags .*.swp *.obj *.bak *.tmp *.exe *.lib *.dll *.a *.so'
+
+" Replaces tab with 4 spaces
+map ,t :%s/\t/    /g<CR>
+" Replaces 4 spaces with tab at beginning of a line
+" map ,T :%s/    /\t/g<CR>
+map ,T :%s/^\(\t*\)    /\1\t/g<CR>
+
+" Strip blanks (strips all whitespace from the end of the line)
+map ,s :%s/\s\+$//g<CR>
+
+" Shift case statements in switch statement
+map ,sw jjVk%k>
+
+" Add { to line below cursor and complentary } below first statement
+map ,b o{<Esc>jo}<Esc>
+
+" Add () to return statements.
+map ,r 0ewi(<Esc>$i)<Esc>
+
+" Add () to print statements.
+map ,p 0ewi(<Esc>$a)<Esc>
+
+" Add // above and below comment
+map ,c O<Esc>jo<Esc>
+
+" Show hex to decimal equivalent
+map <C-h>h :let @*=<C-R><C-W><CR>:echo @* +0<CR>
+
+" Strip out all #if 0 // jcnii sections.  C and C++
+"map ,a k/^#if \d* \/\/\s*jcnii<C-CR>%%mn%V^%d'nddk
+"map ,A k/^#if \d* \/\/\s*jcnii<C-CR>mn%d%'ndd
+" Comment out all #{ jcnii } sections.  Python
+"Comment out top section
+map ,a k/^#{\s*jcnii<CR><C-v>l%hkI#<Esc>x
+"Un-Comment out top section
+map ,A k/^#{\s*jcnii<CR><C-v>l%hkxI#<Esc>
+"Comment out bottom section
+map ,b k/^#{\s*jcnii<CR>l%h<C-v>ll%hkI#<Esc>xN
+"Un-Comment out bottom section
+map ,B k/^#{\s*jcnii<CR>l%h<C-v>ll%hkxI#<Esc>N
+
+" python
+let python_recommended_style = 0
+
+" In python.vim
+let python_highlight_numbers = 1
+let python_highlight_builtins = 1
+let python_highlight_exceptions = 1
+let python_highlight_space_errors = 1
+let python_highlight_all = 1
+
+" In python3.0.vim
+let python_highlight_builtins = 1
+let python_highlight_builtin_objs = 1
+let python_highlight_builtin_funcs = 1
+let python_highlight_exceptions = 1
+let python_highlight_string_formatting = 1
+let python_highlight_string_format = 1
+let python_highlight_string_templates = 1
+let python_highlight_indent_errors = 0
+let python_highlight_space_errors = 1
+let python_highlight_doctests = 1
+let python_highlight_all = 1
+let python_slow_sync = 1
+
+" jcnii }
 
 " Enable filetype detection, plugin loading
 filetype plugin indent on
@@ -83,8 +230,9 @@ autocmd BufEnter * silent! lcd %:p:h
 " Change colors
 let g:rehash256 = 1
 set background=dark
-let g:molokai_original = 1
-colorscheme molokai
+" let g:molokai_original = 1
+" colorscheme molokai
+colorscheme monokai-phoenix
 
 " Auto-reload files changed outside vim
 set autoread
@@ -129,8 +277,8 @@ set encoding=utf-8
 
 " toggle invisible characters
 " set list
+" set listchars=tab:→\ ,eol:¬,trail:°,extends:»,precedes:«
 set nolist
-set listchars=tab:→\ ,eol:¬,trail:°,extends:»,precedes:«
 
 " Split right of current window
 set splitright
