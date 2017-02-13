@@ -5,13 +5,13 @@
 call plug#begin('~/.vim/plugged')
 
 " Utils
-Plug 'airblade/vim-gitgutter' " show git diff in sign column
+" Plug 'airblade/vim-gitgutter' " show git diff in sign column
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finde
 Plug 'elzr/vim-json', { 'for': 'json' } " json highlighting
-Plug 'honza/vim-snippets' " snippet files
+" Plug 'honza/vim-snippets' " snippet files
 Plug 'Raimondi/delimitMate' "automatic closing of surrounds
 Plug 'scrooloose/nerdtree' " amazing file explorer
-Plug 'sirver/ultisnips' " snippet engine
+" Plug 'sirver/ultisnips' " snippet engine
 Plug 'ntpeters/vim-better-whitespace' " whitespace management
 
 " Go
@@ -24,10 +24,10 @@ Plug 'tpope/vim-repeat' " allow dot repeat in plugins
 Plug 'tpope/vim-surround' " easy modify surrounds
 
 " JavaScript
-Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' } " indent support
-Plug 'othree/yajs.vim', { 'for': 'javascript' } " syntax plugin
-Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } " ES6 and beyond syntax
-Plug 'mxw/vim-jsx', { 'for': ['jsx', 'javascript'] } " JSX support
+" Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' } " indent support
+" Plug 'othree/yajs.vim', { 'for': 'javascript' } " syntax plugin
+" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } " ES6 and beyond syntax
+" Plug 'mxw/vim-jsx', { 'for': ['jsx', 'javascript'] } " JSX support
 
 " Visual aides
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } " distraction-free writing
@@ -128,7 +128,8 @@ set showbreak=&
 set encoding=utf-8
 
 " toggle invisible characters
-set list
+" set list
+set nolist
 set listchars=tab:→\ ,eol:¬,trail:°,extends:»,precedes:«
 
 " Split right of current window
@@ -192,7 +193,7 @@ if has("windows")
 endif
 
 " print path
-map <C-f> :echo expand("%:p")<cr>
+" map <C-f> :echo expand("%:p")<cr>
 
 " automatic saving and restoring of folds
 set viewdir=$HOME/.vim/.vimview//
@@ -251,7 +252,7 @@ nnoremap <silent> <leader>q :q<CR>
 " nnoremap <silent> <leader>q :q!<CR>
 
 " exit insert mode
-inoremap jj <esc>
+" inoremap jj <esc>
 
 " reload and edit vimrc
 nnoremap <F5> :source $MYVIMRC<CR>
@@ -279,8 +280,8 @@ nnoremap { {zzzv
 nnoremap } }zzzv
 
 " Center search on scroll down/up
-noremap <C-d> <C-d>zz
-noremap <C-u> <C-u>zz
+" noremap <C-d> <C-d>zz
+" noremap <C-u> <C-u>zz
 
 " Save and restore session
 map <F2> :mksession! ~/vim_session<CR>
@@ -326,8 +327,8 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 GitGutter                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap ]h :GitGutterNextHunk<CR>
-nmap [h :GitGutterPrevHunk<CR>
+" nmap ]h :GitGutterNextHunk<CR>
+" nmap [h :GitGutterPrevHunk<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                    Goyo                                    "
@@ -350,41 +351,42 @@ autocmd! User GoyoLeave Limelight!
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "
 
-function! g:UltiSnips_Complete()
-	call UltiSnips#ExpandSnippet()
-	if g:ulti_expand_res == 0
-		if pumvisible()
-			return "\<C-n>"
-		else
-			call UltiSnips#JumpForwards()
-			if g:ulti_jump_forwards_res == 0
-				return "\<TAB>"
-			endif
-		endif
-	endif
-	return ""
-endfunction
+" function! g:UltiSnips_Complete()
+" 	call UltiSnips#ExpandSnippet()
+" 	if g:ulti_expand_res == 0
+" 		if pumvisible()
+" 			return "\<C-n>"
+" 		else
+" 			call UltiSnips#JumpForwards()
+" 			if g:ulti_jump_forwards_res == 0
+" 				return "\<TAB>"
+" 			endif
+" 		endif
+" 	endif
+" 	return ""
+" endfunction
 
-function! g:UltiSnips_Reverse()
-	call UltiSnips#JumpBackwards()
-	if g:ulti_jump_backwards_res == 0
-		return "\<C-P>"
-	endif
+" function! g:UltiSnips_Reverse()
+" 	call UltiSnips#JumpBackwards()
+" 	if g:ulti_jump_backwards_res == 0
+" 		return "\<C-P>"
+" 	endif
 
-	return ""
-endfunction
+" 	return ""
+" endfunction
 
 
-if !exists("g:UltiSnipsJumpForwardTrigger")
-	let g:UltiSnipsJumpForwardTrigger = "<tab>"
-endif
+" if !exists("g:UltiSnipsJumpForwardTrigger")
+" 	let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" endif
 
-if !exists("g:UltiSnipsJumpBackwardTrigger")
-	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-endif
+" if !exists("g:UltiSnipsJumpBackwardTrigger")
+" 	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" endif
+" let g:UltiSnipsUsePythonVersion = 3
 
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+" au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+" au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   CtrlP                                    "
@@ -403,57 +405,57 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
 let g:ctrlp_working_path_mode = 'ra'
 
-nmap <C-b> :CtrlPCurWD<cr>
-imap <C-b> <esc>:CtrlPCurWD<cr>
+" nmap <C-b> :CtrlPCurWD<cr>
+" imap <C-b> <esc>:CtrlPCurWD<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   vim-go                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " show go declarations
-nmap <C-g> :GoDecls<cr>
-imap <C-g> <esc>:<C-u>GoDecls<cr>
+" nmap <C-g> :GoDecls<cr>
+" imap <C-g> <esc>:<C-u>GoDecls<cr>
 
-autocmd FileType go nmap <leader>b  <Plug>(go-build)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <leader>t  <Plug>(go-test)
-autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <Leader>i <Plug>(go-info)
-autocmd FileType go nmap <silent> <leader>e  <Plug>(go-install)
-autocmd FileType go nmap <silent> <Leader>d <Plug>(go-doc)
-autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
-autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
-autocmd FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
-let g:go_snippet_case_type = "camelcase"
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_deadline = "5s"
-let g:go_decls_includes = "func,type"
-let g:go_auto_type_info = 1
-let g:go_auto_sameids = 1
-let g:go_autodetect_gopath = 1
-let g:go_highlight_build_constraints = 1
+" autocmd FileType go nmap <leader>b  <Plug>(go-build)
+" autocmd FileType go nmap <leader>r  <Plug>(go-run)
+" autocmd FileType go nmap <leader>t  <Plug>(go-test)
+" autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+" autocmd FileType go nmap <Leader>i <Plug>(go-info)
+" autocmd FileType go nmap <silent> <leader>e  <Plug>(go-install)
+" autocmd FileType go nmap <silent> <Leader>d <Plug>(go-doc)
+" autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
+" autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
+" autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
+" autocmd FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
+" autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+" autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+" autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+" autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+" autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+" let g:go_list_type = "quickfix"
+" let g:go_fmt_command = "goimports"
+" let g:go_snippet_case_type = "camelcase"
+" let g:go_highlight_types = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_functions = 1
+" let g:go_highlight_methods = 1
+" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+" let g:go_metalinter_autosave = 1
+" let g:go_metalinter_deadline = "5s"
+" let g:go_decls_includes = "func,type"
+" let g:go_auto_type_info = 1
+" let g:go_auto_sameids = 1
+" let g:go_autodetect_gopath = 1
+" let g:go_highlight_build_constraints = 1
 
-" create a go doc comment based on the word under the cursor
-function! s:create_go_doc_comment()
-	norm "zyiw
-	execute ":put! z"
-	execute ":norm I// \<Esc>$"
-endfunction
-nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>"
+" " create a go doc comment based on the word under the cursor
+" function! s:create_go_doc_comment()
+" 	norm "zyiw
+" 	execute ":put! z"
+" 	execute ":norm I// \<Esc>$"
+" endfunction
+" nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  vim-json                                  "
