@@ -4,7 +4,7 @@
 " Plugin manager is Vim-Plug: https://github.com/junegunn/vim-plug
 " To Update (from a windows cmd prompt) call :PlugUpdate
 "silent!call plug#begin('~/.vim/plugged')
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/vimfiles/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/grep.vim'
@@ -347,7 +347,7 @@ noremap <Leader>n :NERDTreeToggle<cr>
 noremap <Leader>f :NERDTreeFind<cr>
 let NERDTreeShowHidden=1
 let g:NERDTreeMouseMode = 2
-let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
+let NERDTreeBookmarksFile=expand("$HOME/vimfiles/NERDTreeBookmarks")
 let NERDTreeShowBookmarks=1
 
 " Start NerdTree automatically if no file specified
