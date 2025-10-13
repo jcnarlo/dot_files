@@ -1,0 +1,11 @@
+
+set guifont=fixedsys:h12
+set nu
+set noexpandtab
+set tabstop=4
+set shiftwidth=4
+
+set nobackup
+set nowritebackup
+set noswapfile
+set noundofile
